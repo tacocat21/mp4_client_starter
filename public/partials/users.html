@@ -1,0 +1,18 @@
+<div class="list" ng-controller='UsersController'>
+    <div class="row top-nav">
+      <h1 class="small-9 columns">Users</h1>
+      <a class="small-3 columns"href="#/adduser">
+        <button class="button large success">Add User</button>
+      </a>
+    </div>
+    
+    <ul class="userBack">
+      <li ng-repeat="user in data" class="node">
+        <div class="row node-data">
+        <h2 class="small-5 columns">{{user.name}}</h2>
+        <h4 class="small-5 columns">{{user.email}}</h4>
+        <button ng-click="removeUser(user._id)" class="button tiny alert">Remove </button>
+      </div>
+      </li>
+    </ul>
+</div>
