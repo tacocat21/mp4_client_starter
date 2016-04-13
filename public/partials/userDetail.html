@@ -1,0 +1,42 @@
+<div class="list" ng-controller='UserDetailCtrl'>
+	<div class="row top-nav">
+      <h1 class="small-12 columns title">{{value.name}} User Profile</h1>
+      <h4 class="small-12 columns"> {{value.email}}</h4>
+      <h5 class="small-12 columns"> Pending tasks:</h5>
+    </div>
+    
+    <ul class="userBack">
+      {{result}}
+      <li ng-repeat="task in tasks" class="node">
+        <div class="row node-data">
+        <div class="small-1 columns"></div>
+        <a href = "#/tasks/{{task._id}}">
+
+        <h2 class="small-4 columns">{{task.name}}</h2></a>
+        <h4 class="small-3 columns">Deadline: {{task.Deadline}}</h4>
+        <button ng-click="completeTask(task)" class="small-2 columns button large alert">Completed </button>
+      </div>
+      <hr class="separator">
+      </li>
+    </ul>
+        <div class="top-nav row">
+  <button ng-click="show()" ng-show="!showComplete" class="small-3 center columns button large info">Show Completed Tasks </button>
+  </div>
+    <div ng-show="showComplete">
+    <div class="row top-nav"><h5> Completed tasks:</h5></div>
+    <ul class="userBack">
+      
+      <li ng-repeat="task in finishedTasks" class="node">
+        <div class="row node-data">
+        <div class="small-1 columns"></div>
+        <a href = "#/tasks/{{task._id}}">
+
+        <h2 class="small-4 columns">{{task.name}}</h2></a>
+        <h4 class="small-3 columns">Deadline: {{task.Deadline}}</h4>
+
+      </div>
+      <hr class="separator">
+      </li>
+    </ul>
+      </div>
+</div>

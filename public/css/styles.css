@@ -4162,31 +4162,64 @@ table.hover tr:nth-of-type(even):hover {
 
 /* line 2, ../../source_sass/_base.scss */
 .userBack {
-  background-color: blue;
+  background-color: #EBEBEB;
   margin: auto;
   width: 70vw;
-  padding: 0 5px 0 5px; }
+  padding: 10px 15px 10px 15px;
+  border-radius: 10px; }
 
-/* line 8, ../../source_sass/_base.scss */
+/* line 9, ../../source_sass/_base.scss */
+.innerData {
+  width: 60vw;
+  padding: 10px 15px 10px 10px;
+  margin: auto; }
+
+/* line 14, ../../source_sass/_base.scss */
 .node {
   list-style: none;
   position: relative;
-  background-color: green;
   margin: auto;
+  margin-top: 5px;
   padding: 10px 0 10px 0; }
 
-/* line 15, ../../source_sass/_base.scss */
+/* line 22, ../../source_sass/_base.scss */
 .top-nav {
   width: 70vw;
   margin: auto; }
 
-/* line 20, ../../source_sass/_base.scss */
+/* line 27, ../../source_sass/_base.scss */
 .node-data h2 {
   font-size: 36px; }
 
-/* line 24, ../../source_sass/_base.scss */
+/* line 31, ../../source_sass/_base.scss */
 .bottom-bar {
   height: 10vh; }
+
+/* line 34, ../../source_sass/_base.scss */
+.title {
+  font-size: 36;
+  font-family: Ubuntu, Arial; }
+
+/* line 38, ../../source_sass/_base.scss */
+.separator {
+  margin: auto;
+  width: 55vw;
+  margin-top: 5px; }
+
+/* line 43, ../../source_sass/_base.scss */
+.detailTitle {
+  font-size: 20;
+  font-family: Ubuntu; }
+
+/* line 47, ../../source_sass/_base.scss */
+.title-info {
+  width: 60vw;
+  margin: auto; }
+
+/* line 51, ../../source_sass/_base.scss */
+.center {
+  margin-top: 20px;
+  margin: auto; }
 
 /*
   NOTE: Do not touch this file. Write the bulk of your custom styles

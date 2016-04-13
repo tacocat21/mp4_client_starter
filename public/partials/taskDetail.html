@@ -1,0 +1,20 @@
+<div class="list" ng-controller='TaskDetailCtrl'>
+	<div class="userBack">
+		<div class="title-info row">
+			<h1 class="title small-8 columns">Task</h1>
+			 <a class="small-3 columns"href="#/edittask/{{_id}}">
+        <button class="button large info">Edit Task</button>
+      </a>
+		</div>
+		<hr class= "separator">
+		<div class="innerData">
+			<div class="row">
+				<h2 class="small-8 columns detailTitle">{{name}}</h2>
+				<h4 class="small-4 columns">Deadline:{{deadline}}</h3>
+				<p class="small-8 columns">{{description}}</p>
+				<h4 class="small-4 columns">Completed: {{completed}}</h4>
+				<h4 class="small-12 columns"> Assigned to: {{assignedUserName}}</h4>
+			</div>
+		</div>
+	</div>
+</div>

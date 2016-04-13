@@ -1,0 +1,21 @@
+<div class="list" ng-controller='editTaskCtrl'>
+
+	<div class= "userBack">
+    <h1 class="title"> Edit Task </h1>
+	 <form>
+      Name:<br>
+      <input type="text" ng-model="name" required ><br>
+      Description:<br>
+      <input type="text" ng-model="description"required><br>
+      Deadline: <br>
+      <input type="date"  ng-model="deadline" ><br>
+      Assigned User:<br>
+      <select ng-model="userSelected" ng-options="user as user.name for user in userList "  required>
+      </select>
+      
+      <input type="submit"  ng-click="editTask()" name="submit">
+      {{result}}
+    </form>
+
+
+</div>

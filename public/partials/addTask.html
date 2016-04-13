@@ -1,0 +1,18 @@
+<div class="list" ng-controller='addTaskController'>
+  <div class= "userBack">
+    <h1 class="title"> Add Task </h1>
+	 <form>
+      Name:<br>
+      <input type="text"  ng-model="name"required ><br>
+      Description:<br>
+      <input type="text"  ng-model="description" required><br>
+      Deadline: <br>
+      <input type="date"  ng-model="deadline"><br>
+      Assigned User:<br>
+      <select ng-model="user" ng-options="user as user.name for user in data" required>
+      </select>
+
+      <input type="submit"  ng-click="addTask()" name="submit">
+      {{result}}
+    </form>
+</div>

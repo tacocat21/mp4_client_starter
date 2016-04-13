@@ -1,15 +1,22 @@
 // Add any custom Sass & CSS here
 .userBack{
-	background-color: blue;
+	background-color: #EBEBEB;
 	margin: auto;
 	width: 70vw;
-	padding: 0 5px 0 5px;
+	padding: 10px 15px 10px 15px;
+	border-radius: 10px;
+}
+.innerData{
+	width:60vw;
+	padding: 10px 15px 10px 10px;
+	margin: auto;
 }
 .node{
 	list-style: none;
 	position: relative;
-	background-color: green;
+
 	margin: auto;
+	margin-top:5px;
 	padding: 10px 0 10px 0; 
 }
 .top-nav{
@@ -23,4 +30,25 @@
 }
 .bottom-bar{
 	height:10vh;
+}
+.title{
+	font-size: 36;
+	font-family: Ubuntu, Arial;
+}
+.separator{
+	margin:auto;
+	width:55vw;
+	margin-top: 5px;
+}
+.detailTitle{
+	font-size: 20;
+	font-family: Ubuntu;
+}
+.title-info{
+	width:60vw;
+	margin: auto;
+}
+.center{
+	margin-top: 20px;
+	margin: auto;
 }

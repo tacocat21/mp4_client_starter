@@ -1,17 +1,12 @@
 <div class="list" ng-controller='addUsersController'>
-  First Controller
-	<form>
-	  <div class="row">
-          <div class="small-12 columns">
-            <input ng-model="data" type="text" placeholder="data">
-          </div>
-      </div>
-
-    <div class="text-center">
-      <button ng-click="setData()" class="button tiny info">Set Data</button>
-    </div>
-
-    {{displayText}}
-
-  </form>
+  <div class= "userBack">
+    <h1 class="title"> Add User </h1>
+	 <form>
+      Name:<br>
+      <input type="text" name="name" ng-model="username"required ><br>
+      Email:<br>
+      <input type="email" name="email" ng-model="email"required><br>
+      <input type="submit"  ng-click="addUser()" name="submit">
+      {{result}}
+    </form>
 </div>

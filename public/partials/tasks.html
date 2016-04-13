@@ -1,12 +1,50 @@
 <div class="list" ng-controller='TaskController'>    
-  Second Controller
-  <form>
-
-    <div class="text-center">
-      <button ng-click="getData()" class="button tiny info">Get Data</button>
+<div class="row top-nav">
+      <h1 class="small-9 columns title">Tasks</h1>
+      <a class="small-3 columns"href="#/addtask">
+        <button class="button large success">Add Task</button>
+      </a>
     </div>
+    <form class="top-nav row">
+	<div class="row">
+    	<div class="small-2 columns">
+    	<label><input name="where" type="radio" ng-model="query.where" value="" ng-click="filter()"> All</label>
+    	<label><input name="where" type="radio" ng-model="query.where" value="'completed':'true'" ng-click="filter()"> Completed</label>
+    	<label><input name="where" type="radio" ng-model="query.where"value="'completed':'false'" ng-click="filter()"> Pending</label>
+    	</div>
+    	<div class="small-4 columns">
+    		<h5>Sort by:</h5>
+    		<select ng-click="filter()" ng-model="query.sort" >
+    			<option  value="name" >Name</option>
+    			<option value="assignedUserName">Assigned user name</option>
+    			<option value="deadline" >Deadline</option>
+    			<option value="dateCreated">Date created</option>
+    		</select>
+    	</div>
+    	<div class="small-6 columns">
+    	<label><input ng-click="filter()" name="order" type="radio" ng-model="ordering" value="1" ng-click="print()">Ascending</label>
+		<label><input ng-click="filter()" name="order" type="radio" ng-model="ordering" value="-1" ng-click="print()"> Descending</label>
 
-    {{data}}
+    	</div>
+    </div>
+    </form>
+	<ul class="userBack">
+      {{result}}
+      <li ng-repeat="task in data" class="node">
+        <div class="row node-data">
+        <div class="small-1 columns"></div>
+        <a href = "#/tasks/{{task._id}}">
+        <h3 class="small-5 columns">{{task.name}}</h3></a>
+        <div class="small-5 columns">
+        	<div class="row">
+ 		       <h4 class="small-12 columns">Deadline: {{task.Deadline}}</h4>
+ 		       <h4 class="small-12 columns">User: {{task.assignedUserName}}</h4>
+        	</div>
+        </div>
 
-  </form>
+        <button ng-click="removeTask(task._id)" class="small-2 columns button large alert">Delete</button>
+      </div>
+      <hr class="separator">
+      </li>
+    </ul>
 </div>
