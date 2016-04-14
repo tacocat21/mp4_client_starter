@@ -12,6 +12,10 @@
       Assigned User:<br>
       <select ng-model="userSelected" ng-options="user as user.name for user in userList "  required>
       </select>
+      Completed:
+      <label><input name="complete" type="radio" ng-model="comp" value="true" ng-click="print()">Yes</label>
+    <label><input  name="complete" type="radio" ng-model="comp" value="false"> Not yet</label>
+
       
       <input type="submit"  ng-click="editTask()" name="submit">
       {{result}}

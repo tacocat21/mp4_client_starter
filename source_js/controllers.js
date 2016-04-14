@@ -4,11 +4,10 @@ var mp4Controllers = angular.module('mp4Controllers', []);
 mp4Controllers.controller('UsersController', ['$scope', 'Users', '$window'  , function($scope, Users, $window) {
   $scope.getData= function(){  
   Users.get().success(function(data){
-    console.log(data);
     $scope.message= data.message;
     $scope.data=data.data;
+    $scope.result="";
   }).error(function(err){
-    console.log(err);
     $scope.result=err.message;
   });
   };
@@ -18,10 +17,9 @@ mp4Controllers.controller('UsersController', ['$scope', 'Users', '$window'  , fu
     Users._delete(Id).success(function(result){
 //      $scope.getData();
       $scope.getData();
-      console.log($scope.data);
-      console.log("success");
+      $scope.result= "";
     }).error(function(err){
-      console.log(err);
+      $scope.result=result.message;
     });
 
   }
@@ -36,7 +34,7 @@ mp4Controllers.controller('addUsersController', ['$scope', 'Users' , function($s
     input.name=$scope.username;
     input.email=$scope.email;
     Users.addUser(input).success(function(data){
-      console.log("success");
+      
       $scope.result= data.message;
     }).error(function(err){
       $scope.result=err.message;
@@ -47,10 +45,9 @@ mp4Controllers.controller('addUsersController', ['$scope', 'Users' , function($s
 mp4Controllers.controller('addTaskController', ['$scope', 'Tasks' , 'Users', function($scope, Tasks, Users) {
   $scope.getUser = function(){
   Users.get().success(function(data){
-    console.log(data.data);
     $scope.data=data.data;
+    $scope.result="";
   }).error(function(err){
-    console.log(err);
     $scope.result=err.message;
   });
 
@@ -61,16 +58,24 @@ mp4Controllers.controller('addTaskController', ['$scope', 'Tasks' , 'Users', fun
     input.description=$scope.description;
     input.deadline=$scope.deadline;
     input.completed=false;
-    input.assignedUserName=$scope.user.name;
-    input.assignedUser = $scope.user._id;
-    console.log($scope.user);
+    if($scope.user.name){
+      input.assignedUserName=$scope.user.name;
+    }
+    else{
+      input.assignedUserName ="unassigned";
+    }
+    if( $scope.user._id){
+      input.assignedUser = $scope.user._id;
+    }
+    else{
+      input.assignedUser =""; 
+    }
+
 //    $scope.user.pendingTasks.push($scope.name);
     Tasks.addTask(input).success(function(result){
-      console.log("success");
       $scope.result=result.message;
       //Users.modifyUser($scope.user, $scope.user._id);
     }).error(function(err){
-      console.log("failed");
       $scope.result=err.message;
     });
   };
@@ -80,10 +85,8 @@ mp4Controllers.controller('addTaskController', ['$scope', 'Tasks' , 'Users', fun
 
 mp4Controllers.controller('TaskDetailCtrl', ['$scope', 'Tasks' , '$routeParams', '$window', function($scope, Tasks, $routeParams, $window) {
 $scope.getData= function(){
-  console.log($routeParams.id);
-  console.log($window.sessionStorage.baseurl);
+
   Tasks.getSpecificTask($routeParams.id).success(function(result){
-    console.log(result);
     $scope._id=result.data._id;
     $scope.name = result.data.name;
     var day  = new Date(result.data.deadline);
@@ -92,8 +95,9 @@ $scope.getData= function(){
     $scope.description = result.data.description;
     $scope.completed = result.data.completed;
     $scope.created = result.data.dateCreated;
+    $scope.result="";
   }).error(function(err){
-    $scope.err = err.message;
+    $scope.result = err.message;
   });
 }
 $scope.getData();
@@ -104,17 +108,17 @@ mp4Controllers.controller('editTaskCtrl', ['$scope',  'Tasks' , '$routeParams','
 
 $scope.getData= function(){
   Tasks.getSpecificTask($routeParams.id).success(function(result){
-    console.log(result);
     $scope.name = result.data.name;
     $scope.deadline  = new Date(result.data.deadline);
 //  $scope.deadline = ""+day.getDate()+"/"+day.getMonth()+"/"+day.getFullYear();
 //  $scope.user = result.data.assignedUserName;
     $scope.userName = result.data.assignedUserName;
     $scope.description = result.data.description;
-    $scope.completed = result.data.completed;
+    $scope.comp = result.data.completed.toString();
     $scope.created = result.data.dateCreated;
     $scope.userSelected= result.data;
     $scope.d=result.data;
+    $scope.result=result.message;
   }).error(function(err){
     $scope.result = result.message;
   });
@@ -123,13 +127,11 @@ $scope.getData();
 
 $scope.getUsers = function(){  
   Users.get().success(function(data){
-    console.log("users");
-    console.log(data.data);
     $scope.userList = data.data;
-    var day  = new Date(result.data.deadline);
+    var day  = new Date(data.data.deadline);
     $scope.d = ""+day.getDate()+"/"+day.getMonth()+"/"+day.getFullYear();
+
   }).error(function(err){
-    console.log(err);
     $scope.result=err.message;
   });
 };
@@ -141,10 +143,9 @@ $scope.editTask= function(){
 
   query.description = $scope.description;
   query.deadline= $scope.deadline;
-  query.completed= $scope.completed;
+  query.completed= $scope.comp;
   query.assignedUser = $scope.userSelected._id;
   query.assignedUserName = $scope.userSelected.name;
-  console.log(query);
   Tasks.modifyTask(query, $routeParams.id).success(function(result){
     $scope.result= result.message;
   }).error(function(err){
@@ -184,7 +185,6 @@ mp4Controllers.controller('TaskController', ['$scope', 'Tasks' , function($scope
   };
   $scope.filter = function(){
     var str = "?where={"+$scope.query.where+"}&sort={'"+$scope.query.sort+"':'"+$scope.ordering+"'}"+"&skip="+skip+"&limit="+limit;
-    console.log(str);
     Tasks.filterTask(str).success(function(result){
       $scope.result="";
       $scope.data=result.data;
@@ -202,10 +202,8 @@ mp4Controllers.controller('TaskController', ['$scope', 'Tasks' , function($scope
   $scope.nextPage= function(){
     var str = "?where={"+$scope.query.where+"}&sort={'"+$scope.query.sort+"':'"+$scope.ordering+"'}"+"&skip="+skip+"&limit="+limit;
     Tasks.count(str).success(function(result){
-      console.log("gg");
-      console.log(result.data)
-      var count= result.data;
-      if(skip+10>count){
+      count= result.data;
+      if(skip>=count-10){
         return;
       }
       skip+=10;
@@ -231,10 +229,8 @@ mp4Controllers.controller('TaskController', ['$scope', 'Tasks' , function($scope
 mp4Controllers.controller('UserDetailCtrl', ['$scope', '$http', 'Users', '$window' , '$routeParams', 'Tasks',function($scope, $http,  Users, $window, $routeParams, Tasks) {
   $scope.getUserData = function(){
     Users.getSpecificUser($routeParams.id).success(function(data){
-    console.log(data);
     $scope.value= data.data;
   }).error(function(err){
-    console.log(err);
     $scope.result=err.message;
   });
   };
@@ -250,7 +246,7 @@ mp4Controllers.controller('UserDetailCtrl', ['$scope', '$http', 'Users', '$windo
     }).error(function(err){
       $scope.tasks = [];
       $scope.result=err.message;
-      console.log(err);
+      
     });
   };
   $scope.getCompleteTasks = function(){
@@ -264,7 +260,7 @@ mp4Controllers.controller('UserDetailCtrl', ['$scope', '$http', 'Users', '$windo
     }).error(function(err){
       $scope.finishedTasks = [];
       $scope.result=err.message;
-      console.log(err);
+  
     });
 
   };
@@ -272,14 +268,12 @@ mp4Controllers.controller('UserDetailCtrl', ['$scope', '$http', 'Users', '$windo
   $scope.getUserTask();
   $scope.completeTask = function(task){
     task.completed=true;
-    console.log(task);
     Tasks.modifyTask(task, task._id).success(function(result){
       $scope.getUserTask();
 
-      console.log(result);
       $scope.getCompleteTasks();
     }).error(function(err){
-      console.log(err);
+      $scope.result=err.message
     });
  //   $scope.getCompleteTasks();
   };
@@ -291,7 +285,7 @@ $scope.showComplete =false;
 }]);
 
 mp4Controllers.controller('SettingsController', ['$scope' , '$window' , function($scope, $window) {
-  $scope.url = $window.sessionStorage.baseurl;// ="http://www.uiucwp.com:4000/api";
+  $scope.url = $window.sessionStorage.baseurl;
 
   $scope.setUrl = function(){
     $window.sessionStorage.baseurl = $scope.url;
