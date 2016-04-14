@@ -156,22 +156,20 @@ $scope.editTask= function(){
 
 
 mp4Controllers.controller('TaskController', ['$scope', 'Tasks' , function($scope, Tasks) {
-  $scope.getTasks = function(){
-    Tasks.getAll().success(function(result){
-      $scope.data= result.data;
-      $scope.data.forEach(function(entry){
-        var deadline= new Date(entry.deadline);
-        entry.Deadline= ""+deadline.getDate()+"/"+deadline.getMonth()+"/"+deadline.getFullYear();
-      });
+  var count=10;  
+  var skip=0;
+  var limit=10;
 
-    }).error(function(err){
-      $scope.result= err.message;
-    });
-  };  
   $scope.removeTask = function(Id){
       Tasks.deleteTask(Id).success(function(){
         $scope.result="";
-        $scope.getTasks();
+        count--;
+        if(skip>=count){
+          $scope.prevPage();
+        }
+        else{
+          $scope.filter();
+        }
       }).error(function(err){
         $scope.result=err.message;
       });
@@ -180,12 +178,12 @@ mp4Controllers.controller('TaskController', ['$scope', 'Tasks' , function($scope
   $scope.query= {where:"'completed':'false'", sort:"name"}
 //  $scope.query.where="completed':'false'";
   $scope.ordering= 1;  
-  $scope.getTasks();
+  //$scope.getTasks();
   $scope.print = function(){
     console.log($scope.query);
   };
   $scope.filter = function(){
-    var str = "?where={"+$scope.query.where+"}&sort={'"+$scope.query.sort+"':'"+$scope.ordering+"'}";
+    var str = "?where={"+$scope.query.where+"}&sort={'"+$scope.query.sort+"':'"+$scope.ordering+"'}"+"&skip="+skip+"&limit="+limit;
     console.log(str);
     Tasks.filterTask(str).success(function(result){
       $scope.result="";
@@ -200,6 +198,33 @@ mp4Controllers.controller('TaskController', ['$scope', 'Tasks' , function($scope
       $scope.data=[];
     }); 
   };
+
+  $scope.nextPage= function(){
+    var str = "?where={"+$scope.query.where+"}&sort={'"+$scope.query.sort+"':'"+$scope.ordering+"'}"+"&skip="+skip+"&limit="+limit;
+    Tasks.count(str).success(function(result){
+      console.log("gg");
+      console.log(result.data)
+      var count= result.data;
+      if(skip+10>count){
+        return;
+      }
+      skip+=10;
+      $scope.filter();
+    }).error(function(err){
+      $scope.result= err.message;
+    });
+  }
+  $scope.prevPage = function(){
+    if(skip==0){
+      return;
+    }
+    skip-=10;
+    $scope.filter();
+  };
+  var decrementCount =function(){
+
+  }
+  $scope.filter();
 }]);
 
 

@@ -24,9 +24,14 @@
     	<div class="small-6 columns">
     	<label><input ng-click="filter()" name="order" type="radio" ng-model="ordering" value="1" ng-click="print()">Ascending</label>
 		<label><input ng-click="filter()" name="order" type="radio" ng-model="ordering" value="-1" ng-click="print()"> Descending</label>
-
     	</div>
+		
+	<div class="columns small-12">		
+		<button ng-click="prevPage()"class="small-3 columns button large success">Previous</button>
+      	<button ng-click="nextPage()"class="small-3 columns button large success">Next</button>
+      </div>
     </div>
+
     </form>
 	<ul class="userBack">
       {{result}}

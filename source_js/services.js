@@ -80,6 +80,9 @@ mp4Services.factory('Tasks', function($http, $window) {
         },
         filterTask: function(str){
             return $http.get(baseUrl+'/tasks'+str);
+        },
+        count: function(str){
+            return $http.get(baseUrl+'/tasks'+str+'&count=true');
         }
 
     }
